@@ -2,9 +2,8 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract Staking is Ownable {
+contract Staking {
     IERC20 public stakingToken;
     uint256 public constant ONE_HOUR = 1 hours;
     uint256 public constant TWO_HOURS = 2 hours;
@@ -21,6 +20,11 @@ contract Staking is Ownable {
 
     constructor(IERC20 _stakingToken) {
         stakingToken = _stakingToken;
+    }
+
+    function fundContract(uint256 amount) external {
+        require(amount > 0, "Cannot fund with 0 tokens");
+        stakingToken.transferFrom(msg.sender, address(this), amount);
     }
 
     function stake(uint256 amount) external {

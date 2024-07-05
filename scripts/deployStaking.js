@@ -4,14 +4,14 @@ async function main() {
   // Deploy the TESTINGSBDSecond token contract
   const Token = await ethers.getContractFactory("ERC20");
   const token = await Token.deploy("TESTINGSBDSecond", "TSS");
-  await token.deployed();
+  await token.waitForDeployment();
 
   console.log("Token deployed to:", token.address);
 
   // Deploy the Staking contract
   const Staking = await ethers.getContractFactory("Staking");
   const staking = await Staking.deploy(token.address);
-  await staking.deployed();
+  await staking.waitForDeployment();
 
   console.log("Staking contract deployed to:", staking.address);
 }
