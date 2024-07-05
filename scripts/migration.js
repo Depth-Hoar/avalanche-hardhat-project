@@ -18,11 +18,11 @@ async function main() {
 
   // Attach to the deployed AlphaOne contract
   const AlphaOne = await ethers.getContractFactory("AlphaOne");
-  const alphaOne = AlphaOne.attach("0xa15FA57a080eF3B96470e9Be4422d000A3C63f30");
+  const alphaOne = AlphaOne.attach("0x85A49208B1E3af27ca77c3Cd9487bD97cDC4a682");
 
   // Attach to the deployed BetaTwo contract
   const BetaTwo = await ethers.getContractFactory("BetaTwo");
-  const betaTwo = BetaTwo.attach("0xE49bF5dC3f0c3fbDf195C80B165247dad93c2776");
+  const betaTwo = BetaTwo.attach("0xdB79a6f1B9f05F769DeA0449D265CCe836159357");
 
   // Distribute AlphaOne tokens (amounts received are less than displayed below due to 5% tax)
   const tx1 = await alphaOne.connect(deployer).transfer(walletAddresses[1], ethers.parseUnits("1052.63", 18)); // Adjusted for 5% tax
