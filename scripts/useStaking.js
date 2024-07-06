@@ -5,27 +5,20 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log("Using deployer account:", deployer.address);
 
-  const stakingAddress = "YOUR_STAKING_CONTRACT_ADDRESS"; // Replace with your staking contract address
-  const tokenAddress = "YOUR_ERC20_TOKEN_ADDRESS"; // Replace with your ERC20 token address
+  const stakingAddress = "0xc07dD2736fa70059d00e927671EF76496b1050Bf"; // Replace with your staking contract address
+  const tokenAddress = "0x3Fce2bD1Cb657901298fFFC1a8b1696070b7B8c3"; // Replace with your ERC20 token address
 
-  const stakingAbi = [
-    "function fundContract(uint256 amount) external",
-    "function stake(uint256 amount) external",
-    "function claim() external",
-    "function stakes(address) view returns (uint256 amount, uint256 startTime)",
-  ];
+  const stakingAbi = require("../artifacts/contracts/Staking.sol/Staking.json");
+  const tokenAbi = require("../artifacts/contracts/ERC20Mock.sol/ERC20Mock.json");
 
-  const tokenAbi = [
-    "function approve(address spender, uint256 amount) external returns (bool)",
-    "function transfer(address recipient, uint256 amount) external returns (bool)",
-    "function balanceOf(address account) external view returns (uint256)",
-  ];
+  const stakingContract = new ethers.Contract(stakingAddress, stakingAbi.abi, deployer);
+  const tokenContract = new ethers.Contract(tokenAddress, tokenAbi.abi, deployer);
 
-  const stakingContract = new ethers.Contract(stakingAddress, stakingAbi, deployer);
-  const tokenContract = new ethers.Contract(tokenAddress, tokenAbi, deployer);
+  const amountToStake = ethers.parseUnits("10", 18);
+  const amountToFund = ethers.parseUnits("50", 18);
 
-  const amountToStake = ethers.utils.parseUnits("1000", 18);
-  const amountToFund = ethers.utils.parseUnits("5000", 18);
+  let deployerBalance = await tokenContract.balanceOf(deployer.address);
+  console.log("Deployer balance before funding:", ethers.formatUnits(deployerBalance, 18));
 
   // Approve the staking contract to spend tokens
   await tokenContract.approve(stakingAddress, amountToFund);

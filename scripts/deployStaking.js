@@ -1,8 +1,9 @@
 async function main() {
 
+  const [deployer] = await ethers.getSigners();
   // Deploy the TESTINGSBDSecond token contract
   const Token = await ethers.getContractFactory("ERC20Mock");
-  const token = await Token.deploy("TESTINGSBDSecond", "TSS", "0xbA7E2CeE28F4e10f630E9799876D699189b48Bc9", ethers.parseUnits("1000000000000", 18));
+  const token = await Token.deploy("TESTINGSBDSecond", "TSS", deployer.address, ethers.parseUnits("1000000000000", 18));
   await token.waitForDeployment();
   const tokenReceipt = await token.deploymentTransaction().wait();
   const tokenAddress = await token.getAddress();
@@ -14,7 +15,7 @@ async function main() {
   const staking = await Staking.deploy(tokenAddress);
   await staking.waitForDeployment();
   const stakingReceipt = await staking.deploymentTransaction().wait();
-  const stakingAddress = await token.getAddress();
+  const stakingAddress = await staking.getAddress();
   console.log("Staking contract deployed to:", stakingAddress);
   console.log("Gas used for AlphaOne deployment:", stakingReceipt.gasUsed.toString());
 }

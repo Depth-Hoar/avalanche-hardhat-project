@@ -8,14 +8,13 @@ cd avalanche-hardhat-project
 npm install
 ```
 
-make a `.env`file
+make a `.env` file
 
-````shell
+```shell
 PRIVATE_KEY=your_private_key_here
 ```
 
-
-## hardhat commands
+hardhat commands
 
 ```shell
 npx hardhat help
@@ -33,7 +32,8 @@ npx hardhat test test/Staking.js
 npx hardhat run scripts/deployTokens.js
 npx hardhat run scripts/migration.js
 npx hardhat run scripts/deployStaking.js
-````
+npx hardhat run scripts/useStaking.js
+```
 
 run api server
 
