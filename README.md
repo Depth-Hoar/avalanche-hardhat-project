@@ -38,10 +38,13 @@ test locally in a seperate terminal run `npx hardhat node`
 npx hardhat run scripts/deployTokens.js --network localhost
 npx hardhat run scripts/migrationLocalTest.js --network localhost
 npx hardhat run scripts/deployStaking.js --network localhost
-npx hardhat run scripts/useStaking.js --network localhost
 ```
 
 for `useStaking.js` update the addresses accordingly in the file after running deployStaking.js
+
+```shell
+npx hardhat run scripts/useStaking.js --network localhost
+```
 
 run api server
 
